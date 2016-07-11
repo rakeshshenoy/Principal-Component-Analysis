@@ -6,25 +6,25 @@ load('y_test.mat')
 eigenvectors_train = get_sorted_eigenvecs(x_train);
 eigenvectors_test = get_sorted_eigenvecs(x_test);
 
-%for i = 1:8
-%    img = 256 * double(reshape(eigenvectors(:,i), 16, 16));
-%    imwrite(img, sprintf('eig-%d.png', i));
-%end
+for i = 1:8
+    img = 256 * double(reshape(eigenvectors(:,i), 16, 16));
+    imwrite(img, sprintf('eig-%d.png', i));
+end
 
 K = [1, 3, 5, 15, 100];
 samples = [250, 300, 450, 500, 3000];
-%for i = 1:numel(samples)
-%    n = samples(i);
-%    original = double(reshape(x_train(n,:), 16, 16));
-%    imwrite(original, sprintf('3c-orig-%d.png', n));
-%    for j = 1:numel(K)
-%        k = K(j);
-%        X_compressed = x_train * eigenvectors_train(:,1:k);
-%        X_reconstruction = X_compressed * eigenvectors_train(:,1:k)';
-%        y = double(reshape(X_reconstruction(n,:), 16, 16));
-%        imwrite(y, sprintf('3c-%d-%d.png', n, k));
-%    end
-%end
+for i = 1:numel(samples)
+    n = samples(i);
+    original = double(reshape(x_train(n,:), 16, 16));
+    imwrite(original, sprintf('3c-orig-%d.png', n));
+    for j = 1:numel(K)
+        k = K(j);
+        X_compressed = x_train * eigenvectors_train(:,1:k);
+        X_reconstruction = X_compressed * eigenvectors_train(:,1:k)';
+        y = double(reshape(X_reconstruction(n,:), 16, 16));
+        imwrite(y, sprintf('3c-%d-%d.png', n, k));
+        end
+end
 
 for i = 1:numel(K)
     k = K(i);
